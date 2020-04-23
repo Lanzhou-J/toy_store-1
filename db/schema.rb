@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_232613) do
+ActiveRecord::Schema.define(version: 2020_04_23_060448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "manufacturers", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "toys", force: :cascade do |t|
     t.string "name"
@@ -22,6 +29,19 @@ ActiveRecord::Schema.define(version: 2019_10_15_232613) do
     t.string "posted_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "manufacturer_id", null: false
+    t.index ["manufacturer_id"], name: "index_toys_on_manufacturer_id"
+    t.index ["user_id"], name: "index_toys_on_user_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "toys", "manufacturers"
+  add_foreign_key "toys", "users"
 end
