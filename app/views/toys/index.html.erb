@@ -1,37 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Toys</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Date posted</th>
-      <th>Posted by</th>
-      <th>Image</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="outframe">
+  <div class="content">
     <% @toys.each do |toy| %>
-      <tr>
-        <%= image_tag toy.picture if toy.picture.attached? %>
-        <td><%= toy.name %></td>
-        <td><%= toy.description %></td>
-        <td><%= toy.date_posted %></td>
-        <td><%= toy.posted_by %></td>
-        <td><%= toy.image_url %></td>
-        <td><%= link_to 'Show', toy %></td>
-        <td><%= link_to 'Edit', edit_toy_path(toy) %></td>
-        <td><%= link_to 'Destroy', toy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-      
+      <%= link_to toy_path(toy.id) do %>
+        <div class="toy">
+          <div class="toy-content">      
+            <h3>Name: <%= toy.name %></h3>
+            <p>Description: <%= toy.description %></p>
+            <p>Date posted: <%= toy.date_posted %></p>
+          </div>
+          <div class="toy-image">      
+            <%= render "image-logic", toy: toy %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
-<br>
 
-<%= link_to 'New Toy', new_toy_path %>

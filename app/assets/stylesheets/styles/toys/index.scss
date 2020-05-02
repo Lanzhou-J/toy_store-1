@@ -1,0 +1,29 @@
+.outframe {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  width: 80vw
+}
+
+.toy {
+  border: 1px solid black;
+  margin: 10px 0px;
+  display: flex;
+  height: 200px;
+}
+
+.toy-content {
+  width: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  h3, p {
+    margin-left: 15px;
+  }
+}
+
+.toy-image {
+  display: block;
+  width: 100%;
+}
