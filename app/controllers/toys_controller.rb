@@ -51,7 +51,11 @@ class ToysController < ApplicationController
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
+  private 
   def toy_params
-    params.require(:toy).permit(:name, :description, :date_posted, :posted_by)
+    params.require(:toy).permit(:name, :description, :date_posted, :posted_by, :picture)
   end
+
+    
+
 end

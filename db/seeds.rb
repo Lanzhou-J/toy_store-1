@@ -23,6 +23,11 @@
 #   )
 #   puts toy.name
 # end
+# Cleanup - Order is important!
+Manufacturer.destroy_all
+Toy.destroy_all
+User.destroy_all
+
 3.times do
   manufacturer = Manufacturer.create(
     name: Faker::TvShows::Seinfeld.business,
@@ -35,24 +40,33 @@ def random_manufacturer_index
   rand(1..3)
 end
 
+user_admin = User.create(email: 'admin@restaurant.com', password: 'password' )
+puts "user successfully created"
+
+# 3.times do
+#   user = User.create(
+#       email: Faker::Internet.email,
+#       password: "#{rand(0..9)}#{rand(0..9)}#{rand(0..9)}"
+#   )
+#   puts "created new users"
 3.times do
-  user = User.create(
-      email: Faker::Internet.email,
-      password: "#{rand(0..9)}#{rand(0..9)}#{rand(0..9)}"
+  toy = Toy.create(
+    name: "Toy#{Toy.count + 1}",
+    description: "Toy#{Toy.count + 1} is super safe",
+    date_posted: Time.now,
+    posted_by: ["Sally", "Sam", "Tyson", "Mark"].sample,
+    user_id: 1,
+    manufacturer_id: random_manufacturer_index
   )
-  puts "created new users"
-  2.times do
-    toy = Toy.create(
-      name: "Toy#{Toy.count + 1}",
-      description: "Toy#{Toy.count + 1} is super safe",
-      date_posted: Time.now,
-      posted_by: ["Sally", "Sam", "Tyson", "Mark"].sample,
-      user_id: user.id,
-      manufacturer_id: random_manufacturer_index
-    )
-    toy.save
-    puts "created new toys"
-  end
+  # toy.save
+  random_num = rand(1..3)
+
+  toy.picture.attach(
+    io: File.open("app/assets/images/toy#{random_num}.png"), 
+    filename: "toy#{random_num}.png", 
+    content_type: "image/png"
+  )
+  puts "created new toys"
 end
 
 

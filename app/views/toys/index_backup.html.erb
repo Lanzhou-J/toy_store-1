@@ -1,0 +1,18 @@
+<div class="content">
+  <% @toys.each do |toy| %>
+    <%= link_to toy_path(toy.id) do %>
+      <div class="toy">
+        <div class="toy-content">      
+          <h3>Name: <%= toy.name %></h3>
+          <p>Description: <%= toy.description %></p>
+          <p>Date posted: <%= toy.date_posted %></p>
+        </div>
+        <div class="toy-image">      
+          <%= render "image-logic", toy: toy %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%= image_tag "toy1.png", alt: "toy1" %>
