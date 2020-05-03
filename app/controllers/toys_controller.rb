@@ -1,5 +1,7 @@
 class ToysController < ApplicationController
   before_action :set_toy, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_toy, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /toys
   def index
@@ -56,6 +58,16 @@ class ToysController < ApplicationController
     params.require(:toy).permit(:name, :description, :date_posted, :posted_by, :picture)
   end
 
-    
-
+  def set_user_toy
+    if current_user != nil
+      id = params[:id]
+      @toy = current_user.toys.find_by_id(id)
+        if @toy == nil
+          flash[:unauthorized] = "Not authorized to perform that action ❌"
+          redirect_to toys_path
+        end
+    else
+      redirect_to new_user_session_path
+    end
+  end
 end
